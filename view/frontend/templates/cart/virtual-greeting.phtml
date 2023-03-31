@@ -1,0 +1,53 @@
+<style>
+    input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+        border: 2px solid gray;
+    }
+
+    input[type="checkbox"]:checked {
+        background-color: red;
+    }
+</style>
+<div style="padding: 10px">
+    <input type="checkbox" name="virtual_greeting_checkbox" id="virtual_greeting_checkbox" />
+    <label for="virtual_greeting_checkbox">Is this a gift?</label>
+    <?php
+    use \Magento\Quote\Model\Quote;
+
+    echo ""
+        ?>
+</div>
+
+<script>
+    require([
+        "jquery",
+        "Magento_Checkout/js/model/quote",
+        "Magento_Checkout/js/model/url-builder",
+        "mage/storage",
+    ], function ($, quote, urlBuilder, storage) {
+        const checkbox = $("#virtual_greeting_checkbox");
+        const currentValue = Number(
+            window.checkoutConfig.quoteData.storydots_virtual_greeting
+        );
+        checkbox.prop("checked", currentValue);
+
+        checkbox.on("change", function () {
+            var serviceUrl = urlBuilder.createUrl(
+                "/storydots/update-quote",
+                {}
+            );
+            storage
+                .put(
+                    serviceUrl,
+                    JSON.stringify({ virtualGreeting: checkbox.prop("checked") }),
+                    true,
+                    "application/json"
+                )
+                .done(function (res) {
+                    console.log("Order data updated. >> ", JSON.parse(res));
+                });
+        });
+    });
+</script>

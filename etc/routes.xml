@@ -1,0 +1,5 @@
+<router id="standard">
+    <route id="storydots" frontName="storydots">
+        <module name="Storydots_VirtualGreeting" />
+    </route>
+</router>

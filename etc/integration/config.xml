@@ -1,0 +1,7 @@
+<integrations>
+    <integration name="Storydots">
+        <email></email>
+        <endpoint_url></endpoint_url>
+        <identity_link_url></identity_link_url>
+    </integration>
+</integrations>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="quote" resource="default" engine="innodb">
+        <column xsi:type="boolean" name="storydots_virtual_greeting" nullable="false" default="false" comment="Includes Storydots virtual greeting"/>
+    </table>
+    <table name="sales_order" resource="default" engine="innodb">
+        <column xsi:type="boolean" name="storydots_virtual_greeting" nullable="false" default="false" comment="Includes Storydots virtual greeting"/>
+        <column xsi:type="varchar" name="storydots_code" nullable="true" default="null" comment="Storydots greeting Code"/>
+        <column xsi:type="varchar" name="storydots_story_url" nullable="true" default="null" comment="Storydots greeting URL"/>
+        <column xsi:type="varchar" name="storydots_qr_url" nullable="true" default="null" comment="Storydots greeting QR"/>
+        <column xsi:type="varchar" name="storydots_tag_url" nullable="true" default="null" comment="Storydots greeting Tag"/>
+    </table>
+    <table name="sales_order_grid" resource="default" engine="innodb">
+        <column xsi:type="boolean" name="storydots_virtual_greeting" nullable="true" default="false" comment="Includes Storydots virtual greeting"/>
+    </table>
+</schema>

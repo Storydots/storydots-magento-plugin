@@ -1,0 +1,12 @@
+{
+    "quote": {
+        "column": {
+            "storydots_virtual_greeting": true
+        }
+    },
+    "sales_order": {
+        "column": {
+            "storydots_virtual_greeting": true
+        }
+    }
+}

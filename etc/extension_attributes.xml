@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+    <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
+        <attribute code="storydots_code" type="string" />
+        <attribute code="storydots_tag_url" type="string" />
+        <attribute code="storydots_qr_url" type="string" />
+        <attribute code="storydots_story_url" type="string" />
+    </extension_attributes>
+</config>
