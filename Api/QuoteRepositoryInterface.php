@@ -6,10 +6,11 @@ interface QuoteRepositoryInterface
 {
 
     /**
-    * GET for Post api
-    * @param string $virtualGreeting
-    * @return string
-    */
+     * GET for Post api
+     * @param string $virtualGreeting
+     * @return string
+     */
     public function updateQuote($virtualGreeting);
+    public function getQuoteData();
 
 }

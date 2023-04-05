@@ -10,6 +10,8 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Model\Order;
 use Psr\Log\LoggerInterface;
+use Storydots\VirtualGreeting\Helper\Common;
+
 ;
 use \Exception;
 
@@ -17,19 +19,23 @@ use \Exception;
 
 class SaveAfter implements ObserverInterface
 {
-    protected $STORYDOTS_NOTIFY_URL = 'https://api-dev.storydots.app/magento/notify';
     private $logger;
+    private $sdHelper;
     public function __construct(
         LoggerInterface $logger,
+        Common $sdHelper
     ) {
-        $this->logger = $logger;
+        $this->logger   = $logger;
+        $this->sdHelper = $sdHelper;
     }
 
     public function execute(Observer $observer)
     {
         try {
+
+            $STORYDOTS_NOTIFY_URL = $this->sdHelper->getApiUrl() . "/magento/notify";
             /** @var \Magento\Sales\Model\Order $order */
-            $order = $observer->getEvent()->getOrder();
+            $order    = $observer->getEvent()->getOrder();
             $storeUrl = $order->getStore()->getBaseUrl();
 
             if (
@@ -39,12 +45,14 @@ class SaveAfter implements ObserverInterface
                 $orderData                 = [];
                 $orderData['order_id']     = $order->getId();
                 $orderData['store_id']     = $storeUrl;
-                $orderData['has_greeting'] = $order->getData("storydots_virtual_greeting");
+                $hasGreeting               = filter_var($order->getData("storydots_virtual_greeting"), FILTER_VALIDATE_BOOLEAN);
+                $orderData['has_greeting'] = $hasGreeting;
                 foreach ($order->getAllItems() as $item) {
                     $orderData['items'][] = ['sku' => $item->getSku(), 'quantity' => $item->getQtyInvoiced(), 'price' => $item->getPrice(), 'product_name' => $item->getName()];
                 }
                 $orderData['total']        = $order->getTotalInvoiced();
                 $orderData['buyer_email']  = urlencode($order->getCustomerEmail());
+                $orderData['buyer_name']   = $order->getCustomerName();
                 $orderData['order_number'] = $order->getIncrementId();
                 $orderData['created_at']   = $order->getCreatedAt();
 
@@ -55,7 +63,7 @@ class SaveAfter implements ObserverInterface
                     'Content-Length: ' . strlen($requestBody)
                 ];
 
-                $curl = curl_init($this->STORYDOTS_NOTIFY_URL);
+                $curl = curl_init($STORYDOTS_NOTIFY_URL);
                 curl_setopt($curl, CURLOPT_POST, true);
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $requestBody);
                 curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);

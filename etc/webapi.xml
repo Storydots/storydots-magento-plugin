@@ -1,7 +1,13 @@
 <?xml version="1.0"?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../app/code/Magento/Webapi/etc/webapi.xsd">
-    <route method="PUT" url="/V1/storydots/update-quote/">
-        <service class="Storydots\VirtualGreeting\Controller\Checkout\UpdateQuote" method="updateQuote" />
+    <route method="PUT" url="/V1/storydots/quote/">
+        <service class="Storydots\VirtualGreeting\Controller\Checkout\Quote" method="updateQuote" />
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route method="GET" url="/V1/storydots/quote/">
+        <service class="Storydots\VirtualGreeting\Controller\Checkout\Quote" method="getQuoteData" />
         <resources>
             <resource ref="anonymous"/>
         </resources>

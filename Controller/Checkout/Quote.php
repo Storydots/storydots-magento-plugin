@@ -7,7 +7,7 @@ use Magento\Quote\Model\QuoteRepository;
 use Magento\Checkout\Model\Session;
 use Storydots\VirtualGreeting\Api\QuoteRepositoryInterface;
 
-class UpdateQuote implements QuoteRepositoryInterface
+class Quote implements QuoteRepositoryInterface
 {
     protected $logger;
     protected $quoteRepository;
@@ -16,13 +16,45 @@ class UpdateQuote implements QuoteRepositoryInterface
         LoggerInterface $logger,
         QuoteRepository $quoteRepository,
         Session $session
-    )
-    {
+    ) {
         $this->quoteRepository = $quoteRepository;
         $this->logger          = $logger;
         $this->session         = $session;
 
     }
+
+
+    /**
+     * @param boolean $virtualGreeting
+     * @return string
+     * @inheritdoc
+     */
+    public function getQuoteData()
+    {
+
+        $response = ['success' => false];
+
+        try {
+            $quote = $this->session->getQuote();
+
+            if (!$quote)
+                throw new \Exception("Error Processing Request", 1);
+
+            $virtualGreetingState = $quote->getData("storydots_virtual_greeting");
+            $response             = ['success' => true, 'value' => $virtualGreetingState];
+
+        } catch (\Exception $e) {
+            $response = ['success' => false, 'message' => $e->getMessage()];
+            $this->logger->info($e->getMessage());
+        }
+
+        $returnArray = json_encode($response);
+
+        return $returnArray;
+
+    }
+
+
     /**
      * @param boolean $virtualGreeting
      * @return string
