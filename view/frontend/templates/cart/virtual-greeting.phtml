@@ -1,16 +1,7 @@
-<style>
-    input[type="checkbox"] {
-        width: 20px;
-        height: 20px;
-        border-radius: 5px;
-        border: 2px solid gray;
-    }
-
-    input[type="checkbox"]:checked {
-        background-color: red;
-    }
-</style>
-<div style="padding: 10px">
-    <input type="checkbox" name="virtual_greeting_checkbox" onchange="storydots.updateGreeting(this)" />
-    <label for="virtual_greeting_checkbox">Is this a gift?</label>
+<div class="sd-root sd-card">
+    <div class="sd-header">
+        <input type="checkbox" name="virtual_greeting_checkbox"
+            onchange="storydots.updateGreeting(this)" />
+        <label for="virtual_greeting_checkbox">Is this a gift?</label>
+    </div>
 </div>
