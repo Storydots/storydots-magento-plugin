@@ -35,8 +35,11 @@ class SaveAfter implements ObserverInterface
 
             $STORYDOTS_NOTIFY_URL = $this->sdHelper->getApiUrl() . "/magento/notify";
             /** @var \Magento\Sales\Model\Order $order */
-            $order    = $observer->getEvent()->getOrder();
-            $storeUrl = $order->getStore()->getBaseUrl();
+            $order          = $observer->getEvent()->getOrder();
+            $storeUrl       = $order->getStore()->getBaseUrl();
+            $clientIdentity = str_replace("https://", "", $storeUrl);
+            // Remove trailing slash
+            $clientIdentity = rtrim($clientIdentity, '/');
 
             if (
                 $order->getState() == Order::STATE_PROCESSING
@@ -44,7 +47,7 @@ class SaveAfter implements ObserverInterface
             ) {
                 $orderData                 = [];
                 $orderData['order_id']     = $order->getId();
-                $orderData['store_id']     = $storeUrl;
+                $orderData['store_id']     = $clientIdentity;
                 $hasGreeting               = filter_var($order->getData("storydots_virtual_greeting"), FILTER_VALIDATE_BOOLEAN);
                 $orderData['has_greeting'] = $hasGreeting;
                 foreach ($order->getAllItems() as $item) {
