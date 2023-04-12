@@ -3,13 +3,16 @@ namespace Storydots\VirtualGreeting\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\State;
+use Magento\Store\Model\Store;
 
 class Common extends AbstractHelper
 {
     private $_state;
-    public function __construct(State $state)
+    private $_store;
+    public function __construct(State $state, Store $store)
     {
         $this->_state = $state;
+        $this->_store = $store;
     }
     public function getApiUrl()
     {
@@ -20,5 +23,13 @@ class Common extends AbstractHelper
             $API_URL = 'https://api.storydots.app';
         }
         return $API_URL;
+    }
+    public function getStoreIdentity()
+    {
+        $storeUrl      = $this->_store->getBaseUrl();
+        $storeIdentity = str_replace("https://", "", $storeUrl);
+        // Remove trailing slash
+        $storeIdentity = rtrim($storeIdentity, '/');
+        return $storeIdentity;
     }
 }

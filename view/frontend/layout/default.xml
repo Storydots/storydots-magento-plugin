@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+        <referenceContainer name="before.body.end">
+            <block class="Storydots\VirtualGreeting\Block\Data" name="storydots.data" template="Storydots_VirtualGreeting::cart/storydots-data.phtml"/>
+        </referenceContainer>
         <referenceContainer name="minicart">
             <block class="Magento\Framework\View\Element\Template" name="minicart.addons" template="Storydots_VirtualGreeting::cart/virtual-greeting-minicart.phtml" />
         </referenceContainer>
+
     </body>
 </page>
