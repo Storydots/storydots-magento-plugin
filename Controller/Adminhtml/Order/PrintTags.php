@@ -9,6 +9,7 @@ use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Magento\Sales\Api\OrderManagementInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
+use Storydots\VirtualGreeting\Helper\Common;
 
 /**
  * Class MassDelete
@@ -22,6 +23,7 @@ class PrintTags extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
     protected $storeManager;
 
     protected $logger;
+    protected $sdHelper;
     /**
      * @param Context $context
      * @param Filter $filter
@@ -34,13 +36,15 @@ class PrintTags extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
         CollectionFactory $collectionFactory,
         OrderManagementInterface $orderManagement,
         StoreManagerInterface $storeManager,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        Common $sdHelper
     ) {
         parent::__construct($context, $filter);
         $this->collectionFactory = $collectionFactory;
         $this->orderManagement   = $orderManagement;
         $this->storeManager      = $storeManager;
         $this->logger            = $logger;
+        $this->sdHelper          = $sdHelper;
     }
 
     /**
@@ -51,8 +55,7 @@ class PrintTags extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
      */
     protected function massAction(AbstractCollection $collection)
     {
-        $model = $this->_objectManager->create('Magento\Sales\Model\Order');
-        $ids   = [];
+        $ids = [];
         foreach ($collection->getItems() as $order) {
             if ($order->getEntityId() && $order->getData("storydots_virtual_greeting")) {
                 $ids[] = $order->getEntityId();
@@ -60,10 +63,10 @@ class PrintTags extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
         }
         $urlParams = array(
             'ids' => implode(",", $ids),
-            'store' => $this->storeManager->getStore()->getBaseUrl()
+            'store' => $this->sdHelper->getStoreIdentity()
         )
         ;
-        $redirectUrl    = 'https://api-dev.storydots.app/mgPrint?' . http_build_query($urlParams);
+        $redirectUrl    = $this->sdHelper->getApiUrl() . '/mgPrint?' . http_build_query($urlParams);
         $resultRedirect = $this->resultRedirectFactory->create();
         $resultRedirect->setUrl($redirectUrl);
         return $resultRedirect;
