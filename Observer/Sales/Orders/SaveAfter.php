@@ -58,8 +58,9 @@ class SaveAfter implements ObserverInterface
                 $orderData['buyer_name']   = $order->getCustomerName();
                 $orderData['order_number'] = $order->getIncrementId();
                 $orderData['created_at']   = $order->getCreatedAt();
-
-                $requestBody = json_encode($orderData);
+                $orderData['cart_id']      = $order->getQuoteId();
+                
+                $requestBody               = json_encode($orderData);
 
                 $headers = [
                     'Content-Type: application/json',
