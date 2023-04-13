@@ -1,14 +1,7 @@
 <script>
-    require(['jquery'], function ($) {
-        $(document).on('ajax:addToCart', function (event, eventData) {
-            console.log('Product added to cart', eventData);
-            // eventData contains the details of the added product
-            window.STORYDOTS_DATA.cart_id = '<?php echo $block->getQuoteId() ?>'
-        });
-    });
     window.STORYDOTS_DATA = {
         store_identity: '<?php echo $block->getStoreIdentity() ?>',
         cart_id: '<?php echo $block->getQuoteId() ?>',
-        // Add more properties as needed
+        language: '<?php echo $block->getStoreLanguage() ?>'
     };
 </script>

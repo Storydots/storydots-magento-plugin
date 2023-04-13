@@ -2,24 +2,25 @@
 namespace Storydots\VirtualGreeting\Block;
 
 use \Magento\Checkout\Block\Cart;
-use Magento\Store\Model\StoreManagerInterface;
 use Storydots\VirtualGreeting\Helper\Common;
+use \Magento\Framework\Locale\Resolver;
+use \Magento\Framework\View\Element\Template\Context;
 
 class Data extends \Magento\Framework\View\Element\Template
 {
-    protected $storeManager;
+    protected $locale;
     protected $sdHelper;
     protected $checkoutCartBlock;
 
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        StoreManagerInterface $storeManager,
+        Context $context,
+        Resolver $locale,
         Cart $checkoutCartBlock,
         Common $sdHelper,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->storeManager      = $storeManager;
+        $this->locale            = $locale;
         $this->sdHelper          = $sdHelper;
         $this->checkoutCartBlock = $checkoutCartBlock;
     }
@@ -31,5 +32,9 @@ class Data extends \Magento\Framework\View\Element\Template
     public function getQuoteId()
     {
         return $this->checkoutCartBlock->getQuote()->getId();
+    }
+    public function getStoreLanguage()
+    {
+        return $this->locale->getLocale();
     }
 }
