@@ -5,8 +5,7 @@
             <block class="Storydots\VirtualGreeting\Block\Data" name="storydots.data" template="Storydots_VirtualGreeting::cart/storydots-data.phtml"/>
         </referenceContainer>
         <referenceContainer name="minicart">
-            <block class="Magento\Framework\View\Element\Template" name="minicart.addons" template="Storydots_VirtualGreeting::cart/virtual-greeting-minicart.phtml" />
+            <block class="Storydots\VirtualGreeting\Block\ScriptTag" name="minicart.addons" template="Storydots_VirtualGreeting::cart/virtual-greeting-minicart.phtml" />
         </referenceContainer>
-
     </body>
 </page>

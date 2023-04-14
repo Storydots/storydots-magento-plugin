@@ -1,20 +1,7 @@
 <!-- Load script only on cart load -->
 <script>
     var sdScript = document.createElement("script");
-    sdScript.src = "https://tiendanube-dev.s3.amazonaws.com/tiendanube/script/storydots-magento.js";
+    sdScript.src = '<?php echo $block->getScriptURL() ?>';
     document.getElementsByTagName("head")[0].appendChild(sdScript);
 </script>
-
-<div id="sd-magento-minicart">
-
-</div>
-
-
-<!-- ORIGINAL IMPLEMENTATION -->
-<!-- <div id="sd-magento" class="sd-root sd-card">
-    <div class="sd-header">
-        <input type="checkbox" name="virtual_greeting_checkbox"
-            onchange="storydots.updateGreeting(this)" />
-        <label for="virtual_greeting_checkbox">Is this a gift?</label>
-    </div>
-</div> -->
+<div id="sd-magento-minicart"></div>

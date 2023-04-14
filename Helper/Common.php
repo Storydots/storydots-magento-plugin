@@ -24,6 +24,16 @@ class Common extends AbstractHelper
         }
         return $API_URL;
     }
+    public function getAppUrl()
+    {
+        $APP_URL = "";
+        if ($this->_state->getMode() === State::MODE_DEVELOPER) {
+            $APP_URL = 'https://dev.storydots.app';
+        } else {
+            $APP_URL = 'https://storydots.app';
+        }
+        return $APP_URL;
+    }
     public function getStoreIdentity()
     {
         $storeUrl      = $this->_store->getBaseUrl();
