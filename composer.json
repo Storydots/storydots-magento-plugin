@@ -1,17 +1,17 @@
 {
-    "name": "storydots/virtual-greeting",
-    "description": "Add a virtual greeting to your orders for gift",
-    "require": {
-        "php": "~7.3.0||~7.4.0||~8.0.0||~8.1.0"
-    },
-    "type": "magento2-module",
-    "version": "1.0",
-    "autoload": {
-        "files": [
-            "registration.php"
-        ],
-        "psr-4": {
-            "Storydots\\VirtualGreeting\\": ""
-        }
+  "name": "storydots/virtual-greeting",
+  "description": "Add a virtual greeting to your orders for gift",
+  "require": {
+    "php": "~7.3.0||~7.4.0||~8.0.0||~8.1.0"
+  },
+  "type": "magento2-module",
+  "license": "proprietary",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Storydots\\VirtualGreeting\\": ""
     }
+  }
 }
